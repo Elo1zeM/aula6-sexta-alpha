@@ -5,1017 +5,245 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clínica Veterinária Alpha Vet</title>
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
     <script>
-    tailwind.config = {
-        theme: {
-            extend: {
-                fontFamily: {
-                    barlow: ['Barlow', 'sans-serif'],
-                },
-                colors: {
-                    primary: '#1b4414',
-                    verde: '#1b4414',        // verde escuro
-                    verdeClaro: '#778f73',   // verde mais claro
-                    prata: '#c0c0c0',        // prata
-                    preto: '#000000',         // preto
-                    branco: '#ffffff'         // branco
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { barlow: ['Barlow', 'sans-serif'] },
+                    colors: { primary: '#1b4414', dark: '#222222' }
                 }
             }
         }
-    }
-</script>
+    </script>
 </head>
 
-<body class="bg-gray-100">
+<body class="font-barlow text-gray-800 bg-gray-50">
 
-    <nav class="bg-white shadow-lg">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-between">
-                <!-- LOGO -->
-                <div class="flex space-x-7">
-                    <div>
-                        <a href="#" class="flex items-center py-4 px-2">
-                            <span class="font-semibold text-green-800
-                text-lg">ALPHA VET</span>
-                        </a>
-                    </div>
-                    <div class="hidden md:flex items-center space-x-1">
-                        <a href="#home" class="py-4 px-2 text-green-500border-b-4 border-green-500 font-semibold">HOME</a>
-                        <a href="#categoria" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Produtos</a>
-                    </div>
-                </div>
-                <div class="md:hidden flex items-center">
-                    <button class="outline-none mobile-menu-button" id="btn-mobile">
-                        <svg class="w-6 h-6 text-black-500 hover:text-red-500" x-show="!showMenu" fill="none"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex justify-between items-center">
+            <span class="font-bold text-primary text-xl uppercase tracking-tighter">Alpha Vet</span>
+            <div class="space-x-6 font-semibold text-sm">
+                <a href="#home" class="text-primary border-b-2 border-primary">HOME</a>
+                <a href="#servicos" class="text-gray-500 hover:text-primary transition">SERVIÇOS</a>
             </div>
-        </div>
-        <!-- segundo formato -->
-        <div class="hidden mobile-menu md:hidden" id="menu-mobile">
-            <ul>
-                <li><a href="#home" class="block text-sm px-2 py-4 text-white bg-green-300 font-semibold">Home</a></li>
-                <li><a href="#categoria"
-                        class="block text-sm px-2 py-4 text-white bg-green-300 transition duration-300">Produtos</a></li>
-            </ul>
         </div>
     </nav>
 
+    <section id="home" class="py-12 px-6 max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
+        <div class="md:w-1/2 text-left">
+            <h1 class="text-4xl md:text-5xl font-black text-dark leading-tight">
+                Cuidado especializado para quem você <span class="text-primary">ama.</span>
+            </h1>
+            <p class="mt-4 text-gray-500 text-lg">Produtos e serviços cirúrgicos com padrão Alpha Vet.</p>
+            <a href="#servicos" class="inline-block mt-8 px-10 py-4 bg-primary text-white rounded-2xl font-bold shadow-lg hover:scale-105 transition-all">VER CATÁLOGO</a>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+            <img src="./assets/img/logo.png" alt="AlphaVet" class="w-full max-w-sm drop-shadow-2xl" onerror="this.src='https://via.placeholder.com/300?text=Alpha+Vet'">
+        </div>
+    </section>
+
+    <section id="servicos" class="max-w-6xl mx-auto p-6 md:p-12 bg-white rounded-[40px] shadow-sm mb-20">
+        <h2 class="text-3xl font-black text-center mb-8">Nossos Serviços e Produtos</h2>
+
+        <nav id="nav-categoria" class="overflow-x-auto flex gap-2 pb-6 mb-8 border-b border-gray-100"></nav>
+
+        <div id="produtos-container">
+            <div id="categoria-titulo" class="text-left text-dark font-black text-2xl mb-8 border-l-8 border-primary pl-4 uppercase">Aguardando...</div>
+            <div id="lista-produtos" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center p-12">
+        <p class="font-bold uppercase tracking-widest">Alpha Vet 🐾 2024</p>
+    </footer>
+
+    <div id="detalhes-modal" class="fixed inset-0 bg-black/70 z-[100] flex justify-center items-center opacity-0 pointer-events-none transition-all px-4 backdrop-blur-sm">
+        <div id="detalhes-modal-content" class="bg-white w-full max-w-[400px] rounded-[35px] overflow-hidden transform scale-95 transition-all">
+            <div class="relative h-64 bg-gray-50 p-10 flex justify-center items-center">
+                <button onclick="fecharModalDetalhes()" class="absolute top-5 right-5 bg-white w-10 h-10 rounded-full font-bold shadow-md">&times;</button>
+                <img id="detalhes-img" src="" class="max-h-full object-contain">
+            </div>
+            <div class="p-8">
+                <h2 id="detalhes-nome" class="text-2xl font-black text-dark"></h2>
+                <p id="detalhes-preco" class="text-2xl font-black text-primary mt-2"></p>
+                <div id="detalhes-desc" class="bg-gray-50 rounded-2xl p-4 mt-4 text-gray-500 text-sm italic"></div>
+                <button id="detalhes-btn-add" class="w-full bg-primary text-white py-4 rounded-2xl text-lg font-bold mt-8">Adicionar ao Pedido</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="carrinho-footer" class="fixed bottom-0 left-0 w-full bg-primary text-white p-4 z-[90] shadow-2xl transform translate-y-full transition-transform flex justify-between items-center cursor-pointer" onclick="abrirModalCarrinho()">
+        <div class="pl-4"><p class="text-xs opacity-70 font-bold uppercase">Total</p><p id="carrinho-total" class="text-xl font-black">R$ 0,00</p></div>
+        <button class="bg-white text-primary px-8 py-2 rounded-xl font-black mr-4">REVISAR</button>
+    </div>
+
+    <div id="carrinho-modal" class="fixed inset-0 bg-black/60 z-[110] flex flex-col justify-end items-center opacity-0 pointer-events-none transition-all">
+        <div id="carrinho-modal-content" class="bg-white w-full max-w-[500px] max-h-[85vh] rounded-t-[40px] flex flex-col transform translate-y-full transition-all">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h2 class="text-2xl font-black uppercase">Meu Carrinho</h2>
+                <button onclick="fecharModalCarrinho()" class="text-3xl">&times;</button>
+            </div>
+            <div id="carrinho-itens-container" class="p-6 flex-1 overflow-y-auto flex flex-col gap-3"></div>
+            <div class="p-8 border-t bg-gray-50">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-gray-400 font-bold">TOTAL:</span>
+                    <span id="modal-carrinho-total" class="text-3xl font-black text-primary">R$ 0,00</span>
+                </div>
+                <button onclick="finalizarPedido()" class="w-full bg-primary text-white py-4 rounded-2xl text-lg font-bold">Finalizar no WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        //seleciona o botão menu
-        const btn = document.getElementById('btn-mobile');
-        const menu = document.getElementById('menu-mobile');
-
-        //adiciona um evento de clique ao botão
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-    </script>
-
-    </head>
-
-    <body class="font-barlow text-gray-800">
-
-    <header class="flex justify-center mt-[5vh]">
-
-        <figure>
-            <img src="./assets/img/logo.png" alt="Logo AlphaVet" class="w-[300vw] max-w-[300px]">
-        </figure>
-
-    </header>
-
-</body>
-
-        <!-- Menu Mobile -->
-        <div id="mobileMenu"
-            class="fixed top-0 right-[-100%] w-[70%] h-full bg-white shadow-lg transition-all duration-300 p-8 md:hidden z-50">
-
-            <button id="closeBtn" class="text-2xl mb-6">
-                ✕
-            </button>
-
-            <ul class="flex flex-col gap-6 text-lg">
-                <li><a href="#home" class="hover:text-'#778f73' transition">Home</a></li>
-                <li><a href="#categoria" class="hover:text-'#778f73' transition">Produtos</a></li>
-            </ul>
-
-        </div>
-
-        <section class="text-center p-8">
-
-            <div class="md:flex md:items-center md:justify-center md:gap-10">
-
-                <article class="md:w-[45%]">
-
-                    <h1 class="text-2xl md:text-4xl font-semibold">
-                        Clínica Veterinária Alpha Vet
-                    </h1>
-
-                    <a href="#categoria"
-                        class="inline-block mt-4 px-8 py-4 border border-gray-800 rounded-xl text-lg min-h-[48px] hover:bg-primary hover:text-white transition">
-                        SERVIÇOS
-                    </a>
-
-                </article>
-
-            </div>
-
-        </section>
-
-        <!--  CARDÁPIO -->
-        <section id="categoria" class="max-w-[90vw] mx-auto mt-[5vh] p-8">
-
-            <h2 class="text-3xl font-bold text-center mb-8">
-                Serviços e Produtos
-            </h2>
-
-            <!-- inicio botoes de menu - categoria -->
-            <nav id="nav-categoria" class="overflow-x-auto whitespace-nowrap snap-x flex gap-2 mt-6 pb-1">
-                <button data-cat="medicamentos"
-                    class="snap-start px-4 py-1 rounded-full bg-primary text-white font-bold text-sm transition-transform duration-150 cursor-pointer flex-shrink-0 btn-cat">
-                    Medicamentos
-                </button>
-                <button data-cat="cirurgias"
-                    class="snap-start px-4 py-1 rounded-full bg-primary text-white font-bold text-sm transition-transform duration-150 cursor-pointer flex-shrink-0 btn-cat">
-                    Cirurgias
-                </button>
-                <button data-cat="petiscos"
-                    class="snap-start px-4 py-1 rounded-full bg-primary text-white font-bold text-sm transition-transform duration-150 cursor-pointer flex-shrink-0 btn-cat">
-                    Petiscos
-                </button>
-            </nav>
-            <!-- fim do botao menu - categoria -->
-
-            <!-- MUDANÇA PARA GRID -->
-        
-                <div id="cat-medicamentos" class="categoria-conteudo">
-                <h3 class="text-primary text-xl mt-6 font-semibold">
-                    Medicamentos
-                </h3>
-                <div class="grid-cols-2 gap-4">
-
-                <!-- bravecto -->
-                <div class="mt-4 space-y-4">
-                    <div
-                        class="bg-white rounded-[20px] p-3 shadow-sm border border-gray-100 relative flex flex-col hover:shadow-md transition-shadow group">
-                        <div class="absolute inset-0 z-0 cursor-pointer"
-                            onclick="abrirModalDetalhes('Bravecto – Antipulgas e Carrapatos', 179.90, '  Medicamento parasiticida que protege cães contra pulgas e carrapatos por 3 meses com uma única dose.','./assets/img/bravecto.webp', 's_1')">
-
-                        </div>
-                        <!-- Botão Favorito -->
-                        <button class="absolute top-3 right-3 text-gray-300 hover:text-primary transition-colors z-10">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                            </svg>
-                        </button>
-
-                        <!-- nome e preço -->
-                        <img src="./assets/img/bravecto.webp" alt="Bravecto"
-                            class="w-full h-24 object-contain mb-2 mt-2 transition-transform duration-300 drop-shadow-sm group-hover:scale-105 pointer-events-none relative z-10">
-                        <div class="text-left w-full mt-auto relative z-10 pointer-events-none">
-                            <h4 class="font-bold text-sark text-sm leading-tight">Bravecto – Antipulgas e Carrapatos</h4>
-                            <p class="text-primary font-black text-lg leading-none mt-1">R$179,90</p>
-                        </div>
-
-                        <!-- botão adicionar -->
-                        <button onclick="adicionarItem('s_1', 'Bravecto – Antipulgas e Carrapatos', 179.90)"
-                            class="w-full bg-primary text-white py-2 rounded-xl text-xs font-bold mt-3 shadow-md hover:bg-red-800 active:scale-95 transition-all z-10 relative">Adicionar</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- prediderm -->
-            
-                <div
-                    class="bg-white rounded-[20px] p-3 shadow-sm border border-gray-100 relative flex flex-col hover:shadow-md transition-shadow group">
-                    <div class="absolute inset-0 z-0 cursor-pointer"
-                        onclick="abrirModalDetalhes('Prediderm 5 mg', 19.90, 'Anti‑inflamatório para cães, usado para aliviar dor e inflamação em músculos e articulações.','./assets/img/predd.webp', 's_2')">
-
-                    </div>
-                    <!-- Botão Favorito -->
-                    <button class="absolute top-3 right-3 text-gray-300 hover:text-primary transition-colors z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                        </svg>
-                    </button>
-
-                    <!-- nome e preço -->
-                    <img src="./assets/img/predd.webp" alt="Prediderm"
-                        class="w-full h-24 object-contain mb-2 mt-2 transition-transform duration-300 drop-shadow-sm group-hover:scale-105 pointer-events-none relative z-10">
-                    <div class="text-left w-full mt-auto relative z-10 pointer-events-none">
-                        <h4 class="font-bold text-sark text-sm leading-tight">Prediderm 5mg</h4>
-                        <p class="text-primary font-black text-lg leading-none mt-1">R$19,90</p>
-                    </div>
-
-                    <!-- botão adicionar -->
-                    <button onclick="adicionarItem('s_2', 'Prediderm 5mg', 19.90)"
-                        class="w-full bg-primary text-white py-2 rounded-xl text-xs font-bold mt-3 shadow-md hover:bg-red-800 active:scale-95 transition-all z-10 relative">Adicionar</button>
-                </div>
-
-
-            </div>
-            </div>
-
-            <!--  Furolisin 10 Comprimidos -->
-            
-                <div
-                    class="bg-white rounded-[20px] p-3 shadow-sm border border-gray-100 relative flex flex-col hover:shadow-md transition-shadow group">
-                    <div class="absolute inset-0 z-0 cursor-pointer"
-                        onclick="abrirModalDetalhes(' Furolisin 10 Comprimidos', 16.90, 'Diurético usado em alguns casos veterinários para auxiliar no controle de retenção de líquidos conforme prescrição.','./assets/img/furolisin.webp', 's_3')">
-
-                    </div>
-                    <!-- Botão Favorito -->
-                    <button class="absolute top-3 right-3 text-gray-300 hover:text-primary transition-colors z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                        </svg>
-                    </button>
-
-                    <!-- nome e preço -->
-                    <img src="./assets/img/furolisin.webp" alt="Combinado Sushi"
-                        class="w-full h-24 object-contain mb-2 mt-2 transition-transform duration-300 drop-shadow-sm group-hover:scale-105 pointer-events-none relative z-10">
-                    <div class="text-left w-full mt-auto relative z-10 pointer-events-none">
-                        <h4 class="font-bold text-sark text-sm leading-tight"> Furolisin 10 Comprimidos</h4>
-                        <p class="text-primary font-black text-lg leading-none mt-1">R$16,90</p>
-                    </div>
-
-                    <!-- botão adicionar -->
-                    <button onclick="adicionarItem('s_3', ' Furolisin 10 Comprimidos', 16.90)"
-                        class="w-full bg-primary text-white py-2 rounded-xl text-xs font-bold mt-3 shadow-md hover:bg-red-800 active:scale-95 transition-all z-10 relative">Adicionar</button>
-                </div>
-
-            </div>
-            </div>
-
-            <!--  Suplemento Beneflora Vet Avert -->
-            <div class="grid-cols-2 gap-4">
-                <div
-                    class="bg-white rounded-[20px] p-3 shadow-sm border border-gray-100 relative flex flex-col hover:shadow-md transition-shadow group">
-                    <div class="absolute inset-0 z-0 cursor-pointer"
-                        onclick="abrirModalDetalhes(' Suplemento Beneflora Vet Avert', 89.90, 'Suplemento probiótico para saúde intestinal de cães e gatos (não é medicamento curativo, mas auxilia no equilíbrio da microbiota).','./assets/img/bene.webp', 's_4')">
-
-                    </div>
-                    <!-- Botão Favorito -->
-                    <button class="absolute top-3 right-3 text-gray-300 hover:text-primary transition-colors z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                        </svg>
-                    </button>
-
-                    <!-- nome e preço -->
-                    <img src="./assets/img/bene.webp" alt=" Suplemento Beneflora Vet Avert"
-                        class="w-full h-24 object-contain mb-2 mt-2 transition-transform duration-300 drop-shadow-sm group-hover:scale-105 pointer-events-none relative z-10">
-                    <div class="text-left w-full mt-auto relative z-10 pointer-events-none">
-                        <h4 class="font-bold text-sark text-sm leading-tight"> Suplemento Beneflora Vet Avert</h4>
-                        <p class="text-primary font-black text-lg leading-none mt-1">R$89,90</p>
-                    </div>
-
-                    <!-- botão adicionar -->
-                    <button onclick="adicionarItem('s_4', ' Suplemento Beneflora Vet Avert', 89.90)"
-                        class="w-full bg-primary text-white py-2 rounded-xl text-xs font-bold mt-3 shadow-md hover:bg-red-800 active:scale-95 transition-all z-10 relative">Adicionar</button>
-                </div>
-
-            </div>
-            </div>
-
-            </div>
-            </div>
-
-
-            <!-- <div id="cat-sushis e sashimis" class="categoria-conteudo">
-                <h3 class="text-primary text-xl mt-6 font-semibold">
-                    Sushi & Sashimi
-                </h3>
-
-                <div class="mt-4 space-y-4">
-
-                    <article>
-                        <div class="flex justify-between">
-                            <h4 class="font-bold text-lg">Combinado Sushi</h4>
-                            <span class="text-primary">R$ 99,90</span>
-                        </div>
-                        <p class="text-sm text-gray-500">
-                            1 Temaki Filadélfia, 10 Uramakis e 10 Sashimis
-                        </p>
-                    </article>
-
-                    <article>
-                        <div class="flex justify-between">
-                            <h4 class="font-bold text-lg">Combinado Hot</h4>
-                            <span class="text-primary">R$ 99,90</span>
-                        </div>
-                        <p class="text-sm text-gray-500">
-                            1 temaki Filadélfia Médio, 10 urumakis Filadélfia e 10 hot Filadélfia
-                        </p>
-                    </article>
-
-                    <article>
-                        <div class="flex justify-between">
-                            <h4 class="font-bold text-lg">Combinado Sushi</h4>
-                            <span class="text-primary">R$ 115,00</span>
-                        </div>
-                        <p class="text-sm text-gray-500">
-                            10 Sashimis Variados, 10 urumakis Filadélfia e 10 uramakis
-                        </p>
-                    </article>
-
-                    <article>
-                        <div class="flex justify-between">
-                            <h4 class="font-bold text-lg">Combinado Hot</h4>
-                            <span class="text-primary">R$ 120,00</span>
-                        </div>
-                        <p class="text-sm text-gray-500">
-                            1 Temaki Filadélfia Médio, 10 urumakis Filadélfia e 10 hot Filadélfia
-                        </p>
-                    </article>
-                </div>
-            </div> -->
-
-
-            <!-- cirurgias -->
-            <div id="cat-cirurgias" class="categoria-conteudo">
-                 <h3 class="text-primary text-xl mt-6 font-semibold">
-                    Cirurgias
-                </h3>
-                <div class="grid-cols-2 gap-4">
-                    <div
-                        class="bg-white rounded-[20px] p-3 shadow-sm border border-gray-100 relative flex flex-col hover:shadow-md transition-shadow group">
-                        <div class="absolute inset-0 z-0 cursor-pointer"
-                            onclick="abrirModalDetalhes('Castração', 450.00, 'Pacote Cirúrgico: Avaliação pré‑anestésica, Anestesia geral, Antibióticos e analgésicos pós‑operatórios','./assets/img/castra.webp', 's_5')">
-
-                        </div>
-                        <!-- Botão Favorito -->
-                        <button class="absolute top-3 right-3 text-gray-300 hover:text-primary transition-colors z-10">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                            </svg>
-                        </button>
-
-                        <!-- nome e preço -->
-                        <img src="./assets/img/castra.webp" alt="Castração"
-                            class="w-full h-24 object-contain mb-2 mt-2 transition-transform duration-300 drop-shadow-sm group-hover:scale-105 pointer-events-none relative z-10">
-                        <div class="text-left w-full mt-auto relative z-10 pointer-events-none">
-                            <h4 class="font-bold text-sark text-sm leading-tight">Castração</h4>
-                            <p class="text-primary font-black text-lg leading-none mt-1">R$450,00</p>
-                        </div>
-
-                        <!-- botão adicionar -->
-                        <button onclick="adicionarItem('s_5', 'Castração', 450.00)"
-                            class="w-full bg-primary text-white py-2 rounded-xl text-xs font-bold mt-3 shadow-md hover:bg-red-800 active:scale-95 transition-all z-10 relative">Adicionar</button>
-                    </div>
-
-                </div>
-            </div>
-
-            
-                <div
-                    class="bg-white rounded-[20px] p-3 shadow-sm border border-gray-100 relative flex flex-col hover:shadow-md transition-shadow group">
-                    <div class="absolute inset-0 z-0 cursor-pointer"
-                        onclick="abrirModalDetalhes('Cesárea', 750.00, 'Exames pré‑anestésicos, Anestesia geral, Cuidados com os filhotes (primeiros exames) e Medicamentos pós‑op','./assets/img/castra.webp', 's_6')">
-
-                    </div>
-                    <!-- Botão Favorito -->
-                    <button class="absolute top-3 right-3 text-gray-300 hover:text-primary transition-colors z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                        </svg>
-                    </button>
-
-                    <!-- nome e preço -->
-                    <img src="./assets/img/castra.webp" alt="Cesárea"
-                        class="w-full h-24 object-contain mb-2 mt-2 transition-transform duration-300 drop-shadow-sm group-hover:scale-105 pointer-events-none relative z-10">
-                    <div class="text-left w-full mt-auto relative z-10 pointer-events-none">
-                        <h4 class="font-bold text-sark text-sm leading-tight">Cesárea</h4>
-                        <p class="text-primary font-black text-lg leading-none mt-1">R$750,00</p>
-                    </div>
-
-                    <!-- botão adicionar -->
-                    <button onclick="adicionarItem('s_6', 'Cesárea', 750.00)"
-                        class="w-full bg-primary text-white py-2 rounded-xl text-xs font-bold mt-3 shadow-md hover:bg-red-800 active:scale-95 transition-all z-10 relative">Adicionar</button>
-                </div>
-
-            </div>
-            </div>
-
-            <!-- Cirurgia de Obstrução -->
-            
-                <div
-                    class="bg-white rounded-[20px] p-3 shadow-sm border border-gray-100 relative flex flex-col hover:shadow-md transition-shadow group">
-                    <div class="absolute inset-0 z-0 cursor-pointer"
-                        onclick="abrirModalDetalhes('Cirurgia de Obstrução', 850.00, ' Exames de imagem, Avaliação e preparo anestésico, Anestesia geral, Antibióticos e analgésicos','./assets/img/castra.webp', 's_7')">
-
-                    </div>
-                    <!-- Botão Favorito -->
-                    <button class="absolute top-3 right-3 text-gray-300 hover:text-primary transition-colors z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                        </svg>
-                    </button>
-
-                    <!-- nome e preço -->
-                    <img src="./assets/img/castra.webp" alt="Cirurgia de Obstrução"
-                        class="w-full h-24 object-contain mb-2 mt-2 transition-transform duration-300 drop-shadow-sm group-hover:scale-105 pointer-events-none relative z-10">
-                    <div class="text-left w-full mt-auto relative z-10 pointer-events-none">
-                        <h4 class="font-bold text-sark text-sm leading-tight">Cirurgia de Obstrução</h4>
-                        <p class="text-primary font-black text-lg leading-none mt-1">R$850,00</p>
-                    </div>
-
-                    <!-- botão adicionar -->
-                    <button onclick="adicionarItem('s_7', 'Cirurgia de Obstrução', 850.00)"
-                        class="w-full bg-primary text-white py-2 rounded-xl text-xs font-bold mt-3 shadow-md hover:bg-red-800 active:scale-95 transition-all z-10 relative">Adicionar</button>
-                </div>
-
-
-            </div>
-            </div>
-
-            </div>
-            </div>
-
-            <!-- <div id="cat-bebidas" class="categoria-conteudo">
-                <h3 class="text-primary text-xl mt-10 font-semibold">
-                    Bebidas
-                </h3>
-
-                <div class="mt-4 space-y-4">
-
-                    <article>
-                        <div class="flex justify-between">
-                            <h4 class="font-bold text-lg">Limonada</h4>
-                            <span class="text-primary">R$ 20,00</span>
-                        </div>
-                        <p class="text-sm text-gray-500">
-                            Limonada - 300ml
-                        </p>
-                    </article>
-
-                    <article>
-                        <div class="flex justify-between">
-                            <h4 class="font-bold text-lg">Suco Natural Laranja</h4>
-                            <span class="text-primary">R$ 17,00</span>
-                        </div>
-                        <p class="text-sm text-gray-500">
-                            Suco de Laranja Natural - 300ml
-                        </p>
-                    </article>
-
-
-                    <article>
-                        <div class="flex justify-between">
-                            <h4 class="font-bold text-lg">Refrigerante</h4>
-                            <span class="text-primary">R$ 8,00</span>
-                        </div>
-                        <p class="text-sm text-gray-500">
-                            Lata 350ml
-                        </p>
-                    </article>
-
-                </div>
-            </div> -->
-
-
-            <!-- PETISCOS -->
-            <div id="cat-petiscos" class="categoria-conteudo">
-                <h3 class="text-primary text-xl mt-6 font-semibold">
-                    Petiscos
-                </h3>
-                <div class="grid-cols-2 gap-4">
-                    <div
-                        class="bg-white rounded-[20px] p-3 shadow-sm border border-gray-100 relative flex flex-col hover:shadow-md transition-shadow group">
-                        <div class="absolute inset-0 z-0 cursor-pointer"
-                            onclick="abrirModalDetalhes(' Vet Snack Weight Control 85g', 26.90, 'Petisco de baixa caloria desenhado especialmente para controle de peso, ideal para cães com tendência à obesidade ou em dieta.','./assets/img/.webp', 's_8')">
-
-                        </div>
-                        <!-- Botão Favorito -->
-                        <button class="absolute top-3 right-3 text-gray-300 hover:text-primary transition-colors z-10">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                            </svg>
-                        </button>
-
-                        <!-- nome e preço -->
-                        <img src="./assets/img/happydog.webp" alt=" Vet Snack Weight Control 85g"
-                            class="w-full h-24 object-contain mb-2 mt-2 transition-transform duration-300 drop-shadow-sm group-hover:scale-105 pointer-events-none relative z-10">
-                        <div class="text-left w-full mt-auto relative z-10 pointer-events-none">
-                            <h4 class="font-bold text-sark text-sm leading-tight"> Vet Snack Weight Control 85g</h4>
-                            <p class="text-primary font-black text-lg leading-none mt-1">R$26,90</p>
-                        </div>
-
-                        <!-- botão adicionar -->
-                        <button onclick="adicionarItem('s_8', ' Vet Snack Weight Control 85g', 26.90)"
-                            class="w-full bg-primary text-white py-2 rounded-xl text-xs font-bold mt-3 shadow-md hover:bg-red-800 active:scale-95 transition-all z-10 relative">Adicionar</button>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- superfood -->
-            
-                <div
-                    class="bg-white rounded-[20px] p-3 shadow-sm border border-gray-100 relative flex flex-col hover:shadow-md transition-shadow group">
-                    <div class="absolute inset-0 z-0 cursor-pointer"
-                        onclick="abrirModalDetalhes(' Dog Treat Naturals Superfood Sticks', 69.90, 'Petiscos naturais com superfoods (ex.: batata‑doce, quinoa), ricos em nutrientes e antioxidantes — boa escolha para petisco fit e saudável.','./assets/img/superfood.webp', 's_9')">
-
-                    </div>
-                    <!-- Botão Favorito -->
-                    <button class="absolute top-3 right-3 text-gray-300 hover:text-primary transition-colors z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                        </svg>
-                    </button>
-
-                    <!-- nome e preço -->
-                    <img src="./assets/img/superfood.webp" alt=" Dog Treat Naturals Superfood Sticks"
-                        class="w-full h-24 object-contain mb-2 mt-2 transition-transform duration-300 drop-shadow-sm group-hover:scale-105 pointer-events-none relative z-10">
-                    <div class="text-left w-full mt-auto relative z-10 pointer-events-none">
-                        <h4 class="font-bold text-sark text-sm leading-tight"> Dog Treat Naturals Superfood Sticks</h4>
-                        <p class="text-primary font-black text-lg leading-none mt-1">R$69,90</p>
-                    </div>
-
-                    <!-- botão adicionar -->
-                    <button onclick="adicionarItem('s_9', ' Dog Treat Naturals Superfood Sticks', 69.90)"
-                        class="w-full bg-primary text-white py-2 rounded-xl text-xs font-bold mt-3 shadow-md hover:bg-red-800 active:scale-95 transition-all z-10 relative">Adicionar</button>
-                </div>
-
-            </div>
-
-        
-            </div>
-
-            </div>
-            </div>
-
-            <!-- <div id="cat-sobremesas" class="categoria-conteudo">
-                <h3 class="text-primary text-xl mt-6 font-semibold">
-                    Sobremesas
-                </h3>
-
-                <div class="mt-4 space-y-4">
-
-                    <article>
-                        <div class="flex justify-between">
-                            <h4 class="font-bold text-lg">Taça de Sorvete</h4>
-                            <span class="text-primary">R$ 19,90</span>
-                        </div>
-                        <p class="text-sm text-gray-500">
-                            Sorvete - 3 bolas (escolha os sabores)
-                        </p>
-                    </article>
-
-                    <article>
-                        <div class="flex justify-between">
-                            <h4 class="font-bold text-lg">Pudim</h4>
-                            <span class="text-primary">R$ 17,90</span>
-                        </div>
-                        <p class="text-sm text-gray-500">
-                            Pudim de leite condensado
-                        </p>
-                    </article>
-
-                    <article>
-                        <div class="flex justify-between">
-                            <h4 class="font-bold text-lg">Mousse</h4>
-                            <span class="text-primary">R$ 17,90</span>
-                        </div>
-                        <p class="text-sm text-gray-500">
-                            Escolha o sabor: Chocolate, Maracuja, Morango e Coco.
-                        </p>
-                    </article>
-                </div> -->
-
-        </section>
-
-        <footer class="bg-gray-800 text-white text-center p-12 mt-[5vh]">
-            <p>© 2026 Haruy Sushi - Todos os direitos reservados</p>
-
-            <p class="mb-2">Rua Prof. Toledo, Número 500 - Centro Sorocaba-Sp</p>
-            <p class="mb-2">(15) 99789-9876</p>
-            <p class="mb-2">Aberto todos os das das 14h ás 23h</p>
-
-        </footer>
-
-
-        <aside>
-            <a href="https://wa.me/5515987654321">
-                <img src="./assets/img/whatsapp.png" class="h-[5vh] fixed bottom-[2vh] right-[4vw]" alt="WhatsApp">
-            </a>
-        </aside>
-
-        <!-- MODAL DE DETALHES DO PRODUTO -->
-        <div id="detalhes-modal"
-            class="fixed inset-0 bg-black/70 z-[80] flex justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300 px-4">
-            <div class="bg-white w-full max-w-[400px] rounded-[30px] overflow-hidden transform scale-95 transition-transform duration-300 relative flex flex-col"
-                id="detalhes-modal-content">
-
-                <!-- Botão Fechar -->
-                <button onclick="fecharModalDetalhes()"
-                    class="absolute top-4 right-4 bg-white/80 backdrop-blur-md text-dark w-10 h-10 rounded-full flex justify-center items-center font-bold text-2xl shadow-sm z-10 hover:text-primary active:scale-90 transition-all">&times;</button>
-
-                <!-- Imagem -->
-                <div class="w-full h-[280px] bg-gray-50 flex justify-center items-center p-8 relative">
-                    <div class="absolute inset-0 bg-gradient-to-b from-gray-100 to-white opacity-50"></div>
-                    <img id="detalhes-img" src="" alt="Produto"
-                        class="w-full h-full object-contain drop-shadow-xl relative z-10 transition-transform duration-500 hover:scale-105">
-                </div>
-
-                <!-- Infos -->
-                <div class="p-6">
-                    <h2 id="detalhes-nome" class="text-3xl font-black text-dark mb-1 leading-tight tracking-tight">Nome
-                        do
-                        Produto</h2>
-                    <p id="detalhes-preco" class="text-2xl font-black text-primary mb-4 drop-shadow-sm">R$ 0,00</p>
-                    <div class="bg-gray-50 rounded-xl p-4 mb-6">
-                        <p id="detalhes-desc" class="text-gray-600 text-sm leading-relaxed font-medium">Descrição
-                            detalhada
-                            do produto vai aqui...</p>
-                    </div>
-
-                    <button id="detalhes-btn-add"
-                        class="w-full bg-gradient-to-r from-primary to-[#2e6417] text-white py-4 rounded-xl text-[17px] font-extrabold shadow-[0_8px_20px_-6px_rgba(202,60,63,0.5)] hover:shadow-[0_8px_25px_-4px_rgba(202,60,63,0.6)] active:scale-[0.98] transition-all outline-none flex justify-center items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                        Adicionar ao Pedido
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- RODAPÉ CARRINHO FIXO (Abre Modal) -->
-        <div id="carrinho-footer"
-            class="fixed bottom-0 left-0 w-full bg-primary text-white p-4 z-50 shadow-[0_-4px_6px_rgba(0,0,0,0.1)] transform translate-y-full transition-transform duration-300 flex justify-between items-center cursor-pointer"
-            onclick="abrirModalCarrinho()">
-            <div>
-                <p class="text-sm font-medium">Resumo do Pedido</p>
-                <p class="text-xl font-bold">Total: <span id="carrinho-total">R$ 0,00</span></p>
-            </div>
-            <button
-                class="bg-white text-primary px-4 py-2 rounded-lg font-bold shadow-md active:scale-95 transition-all">
-                Ver Carrinho
-            </button>
-        </div>
-
-        <!-- MODAL DO CARRINHO (Detalhes) -->
-        <div id="carrinho-modal"
-            class="fixed inset-0 bg-black/60 z-[60] flex flex-col justify-end sm:justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300">
-
-            <!-- Conteúdo do Modal -->
-            <div class="bg-white w-full sm:w-[500px] h-[85vh] sm:h-auto sm:max-h-[85vh] rounded-t-3xl sm:rounded-2xl flex flex-col transform translate-y-full sm:translate-y-0 sm:scale-95 transition-transform duration-300"
-                id="carrinho-modal-content">
-
-                <!-- Cabelho Modal -->
-                <div class="p-5 border-b flex justify-between items-center">
-                    <h2 class="text-2xl font-bold text-dark">Seu Carrinho</h2>
-                    <button onclick="fecharModalCarrinho()"
-                        class="text-3xl font-bold text-muted hover:text-dark focus:outline-none">&times;</button>
-                </div>
-
-                <!-- Corpo Modal (Itens) -->
-                <div id="carrinho-itens-container" class="p-5 flex-1 overflow-y-auto flex flex-col gap-4">
-                    <!-- Itens serão injetados aqui via JS -->
-                </div>
-
-                <!-- Rodapé Modal (Checkout) -->
-                <div class="p-5 border-t bg-gray-50 rounded-b-3xl sm:rounded-b-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-lg font-bold">Total do Pedido:</span>
-                        <span id="modal-carrinho-total" class="text-2xl font-black text-primary">R$ 0,00</span>
-                    </div>
-                    <button onclick="fecharPedido()" id="btn-fechar-pedido"
-                        class="w-full bg-primary text-white py-3 rounded-xl text-lg font-bold shadow-lg hover:bg-red-700 active:scale-95 transition-all">
-                        Fechar Pedido (Usar GPS)
-                    </button>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- script para botão categoria -->
-        <!-- separar cada categoria -->
-        <script>
-            const botoes = document.querySelectorAll('.btn-cat');
-            const conteudos = document.querySelectorAll('.categoria-conteudo');
-
-            function mudarCategoria(cat) {
-                //mostra apenas a categoria selecionadas
-                conteudos.forEach(div => {
-                    div.id === 'cat-' + cat ? div.classList.remove('hidden') : div.classList.add('hidden')
-                });
-                //atualiza o estilo do botão ativo
-                botoes.forEach(btn => {
-                    if (btn.dataset.cat === cat) {
-                        btn.classList.add('bg-primary', 'text-white');
-                        btn.classList.remove('bg-[#2e6417]', 'text-dark');
-                    } else {
-                        btn.classList.remove('bg-primary', 'text-white');
-                        btn.classList.add('bg-[#2e6417]', 'text-dark')
-                    }
-                });
-            }
-
-            // //adiciona eventos a cada botão
-            // botoes.forEach(btn => {
-            //     btn.addEventListener('touchstart', () => {
-            //         btn.classList.add('scale-95');
-            //         mudarCategoria(btn.dataset.cat);
-            //     });
-            //     btn.addEventListener('touchend', () => {
-            //         btn.classList.remove('scale-95');
-            //     });
-            //     btn.addEventListener('click', () => {
-            //         mudarCategoria(btn.dataset.cat)
-            //     });
-            // });
-
-            //adiciona scroll suave para links internos
-            let startX = 0;
-            let startY = 0;
-
-            //evento de cada botão
-            botoes.forEach(btn => {
-                //touchstart é disparado assim que o dedo toca a tela
-                btn.addEventListener('touchstart', (e) => {
-                    startX = e.touches[0].clientX;
-                    startY = e.touches[0].clientY;
-                    //aplica class tailwind para efeito de clique
-                    btn.classList.add('scale-95', 'opacity-80');
-                });
-                //touchend quando tira o dedo da tela
-                btn.addEventListener('touchend', (e) => {
-                    //remove efeito visual
-                    btn.classList.remove('scale-95', 'opacity-80');
-                    //ultima posição deo dedo antes de levantar
-                    const endX = e.changedTouches[0].clientX;
-                    const endY = e.changedTouches[0].clientY;
-                    //calcula distancia do mov.
-                    const deltaX = Math.abs(endX - startX);
-                    const deltaY = Math.abs(endY - startY);
-                    //logica matemática se move menos de 10px = clique intensional
-                    if (deltaX < 10 && deltaY < 10) {
-                        mudarCategoria(btn.dataset.cat);
-                    }
-                });
-                //touchcancel se o calcular aparecer uma ligação ou notificação popup
-                btn.addEventListener('touchcancel', () => {
-                    btn.classList.remove('scale-95', 'opacity-80');
-                });
-                //click para usuarios desktop
-                btn.addEventListener('click', () => {
-                    mudarCategoria(btn.dataset.cat);
-                });
-            });
-
-            //logica do carrinho, loclstorage e apis
-            //modal detalhes do produto
-
-            const modalDetalhes = document.getElementById('detalhes-modal');
-            const modalDetalhesContent = document.getElementById('detalhes-modal-content');
-
-            //abre o modal com informações do produto clicado
-            function abrirModalDetalhes(nome, preco, desc, img, id) {
-                if (navigator.vibrate) navigator.vibrate(40);
-
-                document.getElementById('detalhes-nome').innerText = nome;
-                document.getElementById('detalhes-preco').innerText = preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-                document.getElementById('detalhes-desc').innerText = desc;
-                document.getElementById('detalhes-img').src = img;
-                document.getElementById('detalhes-btn-add').onclick = function () {
-                    adicionarItem(id, nome, preco);
-                    fecharModalDetalhes();
-                }
-                modalDetalhes.classList.remove('opacity-0', 'pointer-events-none');
-                setTimeout(() => {
-                    modalDetalhesContent.classList.remove('scale-95');
-                    modalDetalhesContent.classList.add('scale-100');
-                }, 10);
-            }
-
-            //fechar o modal detalhes do produto
-            function fecharModalDetalhes() {
-                modalDetalhesContent.classList.remove('scale-100');
-                modalDetalhesContent.classList.add('scale-95');
-                setTimeout(() => {
-                    modalDetalhes.classList.add('opacity-0', 'pointer-events-none');
-                }, 300);
-            }
-
-        modalDetalhes.addEventListener('click', function (e){
-            if(e.target === modalDetalhes) fecharModalDetalhes();
-        });
-
-          //carrinho
-        //array para armazenar itens do carrinho
+        const API_URL = 'https://17-3-aula7-alpha-k2wz.vercel.app/api';
         let carrinho = [];
-        //elementos do DOM
-        const carrinhoFooter = document.getElementById('carrinho-footer');
-        const carrinhoTotalSpan = document.getElementById ('carrinho-total');
-        //elementos do modal
-        const modal= document.getElementById('carrinho-modal');
-        const modalContent = document.getElementById('carrinho-modal-content');
-        const itensContainer = document.getElementById('carrinho-itens-container');
-        const modalTotalSpan = document.getElementById('modal-carrinho-total');
-        //verifica se o carrinho já tem itens salvos no localstorage
-        function inicializarCarrinho(){
-            const carrinhoSalvo = localStorage.getItem('haruy_carrinho');
-            if (carrinhoSalvo){
-                //se existe algo salvo converte de volta para array e atualiza o carrinho
-                carrinho = JSON.parse(carrinhoSalvo);
-                atualizarInterfaceCart();
+        let categoriaData = [];
 
-            }
+        async function carregarCategoria() {
+            try {
+                const res = await fetch(`${API_URL}/categorias`);
+                categoriaData = await res.json();
+                renderizarBotoes();
+                if (categoriaData.length > 0) selecionarCategoria(categoriaData[0].id, categoriaData[0].nome);
+            } catch (e) { console.error("Erro categorias", e); }
         }
 
-        //adicionar ao carrinho
-        function adicionarItem(id,nome,preco){
-            if (navigator.vibrate){
-                navigator.vibrate(200);
-            }
-            const index = carrinho.findIndex(item => item.id === id);
+        function renderizarBotoes() {
+            const nav = document.getElementById('nav-categoria');
+            nav.innerHTML = '';
+            categoriaData.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = "px-6 py-2 rounded-full font-bold text-sm bg-gray-100 text-dark transition-all btn-cat flex-shrink-0";
+                btn.innerText = cat.nome;
+                btn.onclick = () => selecionarCategoria(cat.id, cat.nome);
+                btn.dataset.id = cat.id;
+                nav.appendChild(btn);
+            });
+        }
 
-            if (index !== -1){
-                carrinho[index].quantidade += 1;
-            }else{
-                carrinho.push({
-                    id: id,
-                    nome: nome,
-                    preco: preco,
-                    quantidade: 1
+        async function selecionarCategoria(id, nome) {
+            document.getElementById('categoria-titulo').innerText = nome;
+            document.querySelectorAll('.btn-cat').forEach(btn => {
+                btn.classList.toggle('bg-primary', btn.dataset.id == id);
+                btn.classList.toggle('text-white', btn.dataset.id == id);
+                btn.classList.toggle('bg-gray-100', btn.dataset.id != id);
+            });
+            carregarProdutos(id);
+        }
+
+        async function carregarProdutos(categoriaId) {
+            const lista = document.getElementById('lista-produtos');
+            lista.innerHTML = '<p class="col-span-full text-center py-10">Filtrando itens...</p>';
+            
+            try {
+                // Buscamos todos para garantir que o filtro funcione independente do nome da coluna
+                const res = await fetch(`${API_URL}/produtos`);
+                const todos = await res.json();
+
+                // FILTRO INTELIGENTE: aceita categoria_id ou categoriaid
+                const filtrados = todos.filter(p => {
+                    const cId = p.categoria_id || p.categoriaid || p.categoriaId;
+                    return cId == categoriaId;
                 });
-            }
-            atualizarCarrinho();
+
+                renderizarProdutos(filtrados);
+            } catch (e) { lista.innerHTML = 'Erro ao carregar.'; }
         }
 
-        //função modal abrir e fechar do carrinho
-        function abrirModalCarrinho (){
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                modalContent.classList.remove('translate-y-full', 'scale-95');
-            }, 10);
-        }
-        function fecharModalCarrinho(){
-            modalContent.classList.add('translate-y-full', 'scale-95');
-            setTimeout(() => {
-                modal.classList.add('opacity-0', 'pointer-events-none');
-            }, 300);
-        }
-
-        //controles dentro do modal do carrinho (aumentar, diminuir,remover itens)
-        //controle de (+ / -) quantidade
-        function aumentarQuantidade(id){
-            const index = carrinho.findIndex(item => item.id === id);
-            if (index !== -1){
-                carrinho[index].quantidade += 1;
-                atualizarCarrinho();
-                //efeito de vibração para feedback tátil
-                if (navigator.vibrate) navigator.vibrate(50);
-            }
-        }
-        
-        function diminuirQuantidade(id){
-           const index = carrinho.findIndex(item => item.id === id);
-           if (index !== -1){
-            if (carrinho[index].quantidade>1){
-                carrinho [index].quantidade -= 1;
-            }else{
-                carrinho.splice(index, 1);
-                if (carrinho.length === 0){
-                    fecharModalCarrinho();
-                }
-            }
-            atualizarCarrinho();
-            if (navigator.vibrate) navigator.vibrate(50);
-           }
-        }
-
-        //persistencia do carrinho no localstorage e atualização da interface
-        function atualizarCarrinho() {
-            localStorage.setItem('haruy_carrinho', JSON.stringify(carrinho));
-            atualizarInterfaceCart();
-        }
-        function atualizarInterfaceCart(){
-            if(carrinho.length === 0){
-                carrinhoFooter.classList.add('translate-y-full');
-                return;
-            }
-            const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
-            const totalFormatado = total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
-            //Formata para a moeda Brasileira R$
-            carrinhoTotalSpan.innerText = totalFormatado;
-            modalTotalSpan.innerText = totalFormatado;
-            // Exibe a barra do carrinho (traz de volta pra tela)
-            carrinhoFooter.classList.remove('translate-y-full');
-            //Renderiza a lista de itens dentro do Modal
-            renderizarItensModal();
-        }
-
-       //função para renderizar os itens do carrinho dentro do modal
-        function renderizarItensModal(){
-            if (!itensContainer) return;
-            itensContainer.innerHTML = '';
-            // para cada item no array, cria um HTML
-            carrinho.forEach(item => {
-                const subTotal = (item.preco * item.quantidade).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
-                const precoUnit = item.preco.toLocaleString
-                ('pt-BR', {style: 'currency', currency: 'BRL'});
-                const divItem=document.createElement('div');
-                divItem.className = "flex justify-between items-center border-b pb-4 mt-2";
-
-                divItem.innerHTML = `
-                <div class="flex-1">
-                    <h4 class="font-bold text-lg text-dark">${item.nome}</h4>
-                    <p class="text-sm text-muted">${precoUnit}</p>
-                    <p class="text-bold text-primary mt-1">${subTotal}</p>
+        function renderizarProdutos(produtos) {
+            const lista = document.getElementById('lista-produtos');
+            lista.innerHTML = produtos.length ? '' : '<p class="col-span-full text-center py-10">Nenhum item nesta categoria.</p>';
+            
+            produtos.forEach(p => {
+                const img = p.imagem && p.imagem.startsWith('http') ? p.imagem : `./assets/img/${p.imagem || 'logo.png'}`;
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-[30px] p-4 shadow-sm border border-gray-100 flex flex-col hover:shadow-lg transition-all";
+                card.innerHTML = `
+                    <div class="h-32 flex justify-center items-center mb-4 cursor-pointer" onclick="abrirModalDetalhes('${p.nome}', ${p.preco}, '${(p.descricao || '').replace(/'/g, "")}', '${img}', '${p.id}')">
+                        <img src="${img}" class="max-h-full max-w-full object-contain" onerror="this.src='./assets/img/logo.png'">
                     </div>
-
-                    <div class="flex items-center gap-3 bg-gray-100 p-2 rounded-xl">
-                        <button onclick="diminuirQuantidade('${item.id}')"
-                        class="w-8 h-8 flex justify-center items-center bg-white rounded-lg
-                        font-bold text-xl shadow-sm hover:text-primary
-                        active: scale-95 transition-all">-</button>
-                        <span class="font-bold text-lg w-4 text-center">${item.quantidade}</span>
-                        <button onclick="aumentarQuantidade('${item.id}')" class="w-8 h-8
-                        flex justify-center items-center bg-white rounded-lg font-bold
-                        text-xl shadow-sm hover:text-primary active:scale-95
-                        transition-all">+</button>
+                    <div class="flex-1">
+                        <h4 class="font-bold text-dark text-xs h-8 overflow-hidden uppercase">${p.nome}</h4>
+                        <p class="text-primary font-black text-lg">R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
+                    </div>
+                    <button onclick="adicionarItem('${p.id}','${p.nome}', ${p.preco})" class="w-full bg-primary text-white py-3 rounded-xl text-[10px] font-bold mt-4">ADICIONAR</button>
                 `;
-                itensContainer.appendChild(divItem);
-            })
+                lista.appendChild(card);
+            });
         }
 
-        //fechar pedido (Geolocalização API - GPS)
-        function fecharPedido(){
-            if (carrinho.length === 0){
-                const btnPedido = document.getElementById('btn-fechar-pedido');
-                if (!btnPedido) return;
+        // --- CARRINHO ---
+        function adicionarItem(id, nome, preco) {
+            const i = carrinho.findIndex(item => item.id === id);
+            if (i !== -1) carrinho[i].quantidade++;
+            else carrinho.push({ id, nome, preco, quantidade: 1 });
+            atualizarCarrinho();
+        }
 
-                const btnOriginalText = btnPedido.innerText;
-                btnPedido.innerText = "Buscando localização...";
+        function atualizarCarrinho() {
+            const total = carrinho.reduce((acc, i) => acc + (i.preco * i.quantidade), 0);
+            document.getElementById('carrinho-total').innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            document.getElementById('modal-carrinho-total').innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            document.getElementById('carrinho-footer').classList.toggle('translate-y-full', carrinho.length === 0);
+            renderizarListaCarrinho();
+        }
 
-                navigator.geolocation.getCurrentPosition(
-                    //callback de sucesso
-                    (posicao) => {
-                        const lat = posicao.coords.latitude;
-                        const ing = posicao.coords.longitude;
+        function renderizarListaCarrinho() {
+            const c = document.getElementById('carrinho-itens-container');
+            c.innerHTML = '';
+            carrinho.forEach(i => {
+                const d = document.createElement('div');
+                d.className = "flex justify-between items-center bg-gray-50 p-4 rounded-2xl";
+                d.innerHTML = `
+                    <p class="font-bold text-xs uppercase">${i.nome}</p>
+                    <div class="flex items-center gap-3">
+                        <button onclick="qtd('${i.id}', -1)" class="w-6 h-6 bg-white rounded shadow">-</button>
+                        <span class="font-bold text-sm">${i.quantidade}</span>
+                        <button onclick="qtd('${i.id}', 1)" class="w-6 h-6 bg-white rounded shadow">+</button>
+                    </div>
+                `;
+                c.appendChild(d);
+            });
+        }
 
-                        btnPedido.innerText = btnOriginalText;
-
-                        alert(`Pedido Fechado com Sucesso! 
-                        \nSua Localização: ${lat.toFixed(4)}, ${lmg.toFixed(4)}
-                        \nOs dados do carrinho serão limpos`);
-
-                        carrinho = [];
-                        fecharModalCarrinho();
-                        atualizarCarrinho();
-                    },
-                    //callback de erro
-                    (erro) => {
-                        btnPedido.innerText = btnOriginalText;
-                        console.error(erro);
-                        alert("Não foi possível obter sua localização.");
-                        carrinho = [];
-                        fecharModalCarrinho();
-                        atualizarCarrinho();
-                    }
-                );
-            }else {
-                alert(`Pedido Fechado com Sucesso!\n(navegador sem suporte GPS)`);
-                carrinho = [];
-                fecharModalCarrinho();
+        function qtd(id, n) {
+            const i = carrinho.findIndex(item => item.id === id);
+            if (i !== -1) {
+                carrinho[i].quantidade += n;
+                if (carrinho[i].quantidade <= 0) carrinho.splice(i, 1);
                 atualizarCarrinho();
             }
         }
-        inicializarCarrinho();
-        </script>
 
-    </body>
+        function abrirModalDetalhes(n, p, d, i, id) {
+            document.getElementById('detalhes-nome').innerText = n;
+            document.getElementById('detalhes-preco').innerText = `R$ ${p.toFixed(2).replace('.', ',')}`;
+            document.getElementById('detalhes-desc').innerText = d || "Sem descrição.";
+            document.getElementById('detalhes-img').src = i;
+            document.getElementById('detalhes-btn-add').onclick = () => { adicionarItem(id, n, p); fecharModalDetalhes(); };
+            document.getElementById('detalhes-modal').classList.remove('opacity-0', 'pointer-events-none');
+        }
 
+        function fecharModalDetalhes() { document.getElementById('detalhes-modal').classList.add('opacity-0', 'pointer-events-none'); }
+        function abrirModalCarrinho() { 
+            document.getElementById('carrinho-modal').classList.remove('opacity-0', 'pointer-events-none');
+            document.getElementById('carrinho-modal-content').classList.remove('translate-y-full');
+        }
+        function fecharModalCarrinho() { 
+            document.getElementById('carrinho-modal-content').classList.add('translate-y-full');
+            setTimeout(() => document.getElementById('carrinho-modal').classList.add('opacity-0', 'pointer-events-none'), 300);
+        }
+
+        function finalizarPedido() {
+            let m = "*NOVO PEDIDO ALPHA VET*\n\n";
+            carrinho.forEach(i => m += `• ${i.quantidade}x ${i.nome}\n`);
+            m += `\n*TOTAL: ${document.getElementById('modal-carrinho-total').innerText}*`;
+            window.open(`https://wa.me/5515999999999?text=${encodeURIComponent(m)}`, '_blank');
+        }
+
+        carregarCategoria();
+    </script>
+</body>
 </html>
